@@ -1,11 +1,12 @@
 from urllib.request import urlopen
 from urllib.error import HTTPError,URLError
 from bs4 import BeautifulSoup
-import re, sys
+import re, sys, random, datetime
 
 url="http://en.wikipedia.org/wiki/Kevin_Bacon"
+regexp="^(/wiki/)((?!:).)*$"
 
-def getHrefTags(url,regexp):
+def getLinks(url,regexp):
     try:
         html = urlopen(url)
     except (HTTPError, URLError) as e:
@@ -18,5 +19,13 @@ def getHrefTags(url,regexp):
         return None
     return hrefs
 
-for link in getHrefTags(url,"^(/wiki/)((?!:).)*$"): # ?! means does not contain 
-    print(link.attrs["href"]) #print attribute src only!
+# for link in getLinks(url,regexp): # ?! means does not contain 
+#     print(link.attrs["href"]) #print attribute src only!
+
+wikiheading="https://en.wikipedia.org"
+
+links=getLinks(url,regexp)
+while len(links) > 0:
+	newArticle=links[random.randint(0,len(links)-1)].attrs["href"]
+	print(newArticle)
+	links=getLinks(wikiheading+newArticle,regexp)
