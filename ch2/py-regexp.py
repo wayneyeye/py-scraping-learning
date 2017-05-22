@@ -19,4 +19,4 @@ def getImg(url,regexp):
     return images
 
 for image in getImg(url,"\.\.\/img\/gifts\/img.*\.jpg"):
-    print(image)
+    print(image.attrs["src"]) #print attribute src only!
