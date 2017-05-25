@@ -5,6 +5,12 @@ import csv
 data = urlopen("http://pythonscraping.com/files/MontyPythonAlbums.csv").read().decode('ascii', 'ignore')
 dataFile = StringIO(data)
 csvReader = csv.reader(dataFile)
-# cursor 
-for row in csvReader:
-	print("The album \""+row[0]+"\" was released in "+str(row[1]))
+# cursor first row is the table header
+# for row in csvReader:
+# 	print("The album \""+row[0]+"\" was released in "+str(row[1]))
+
+
+dictReader = csv.DictReader(dataFile)
+print(dictReader.fieldnames)
+for row in dictReader:
+    print(row)
